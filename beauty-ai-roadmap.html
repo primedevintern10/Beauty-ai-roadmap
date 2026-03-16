@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauty AI — Product Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f7f4;
+  --surface: #ffffff;
+  --surface2: #f2f0ec;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.15);
+  --text: #1a1814;
+  --text-2: #5a5650;
+  --text-3: #9a9690;
+  --green: #1D9E75; --green-bg: #E1F5EE; --green-dark: #085041;
+  --purple: #7F77DD; --purple-bg: #EEEDFE; --purple-dark: #3C3489;
+  --amber: #EF9F27; --amber-bg: #FAEEDA; --amber-dark: #633806;
+  --blue: #378ADD; --blue-bg: #E6F1FB; --blue-dark: #185FA5;
+  --coral: #D85A30; --coral-bg: #FAECE7; --coral-dark: #712B13;
+  --pink: #D4537E; --pink-bg: #FBEAF0; --pink-dark: #72243E;
+  --red: #E24B4A; --red-bg: #FCEBEB; --red-dark: #791F1F;
+  --teal-bg: #E1F5EE; --teal: #0F6E56;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 100px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --max: 900px;
+  --font: 'DM Sans', sans-serif;
+  --font-display: 'DM Serif Display', serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── Top nav ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo { font-family: var(--font-display); font-size: 24px; color: var(--text); letter-spacing: -0.02em; }
+.logo span { color: var(--green); }
+.nav-pills { display: flex; gap: 6px; }
+.nav-pill {
+  font-size: 14px; font-weight: 500; padding: 6px 16px;
+  border-radius: var(--radius-pill); border: 1px solid var(--border-strong);
+  color: var(--text-2); background: transparent; cursor: pointer;
+  transition: all .18s ease; white-space: nowrap;
+}
+.nav-pill:hover { background: var(--surface2); }
+.nav-pill.p0.active { background: #f0ece6; color: #2c2c2a; border-color: #888780; }
+.nav-pill.p1.active { background: var(--green-bg); color: var(--green-dark); border-color: var(--green); }
+.nav-pill.p2.active { background: var(--purple-bg); color: var(--purple-dark); border-color: var(--purple); }
+.nav-pill.p3.active { background: var(--amber-bg); color: var(--amber-dark); border-color: var(--amber); }
+
+/* ── Main layout ── */
+.main { max-width: var(--max); margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+/* ── Phase panels ── */
+.phase-panel { display: none; animation: fadeUp .25s ease both; }
+.phase-panel.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── Phase header ── */
+.phase-head { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.phase-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+.phase-title { font-family: var(--font-display); font-size: 36px; letter-spacing: -0.02em; color: var(--text); margin-bottom: 6px; line-height: 1.15; }
+.phase-sub { font-size: 18px; color: var(--text-2); font-weight: 300; }
+
+/* ── Inspired by ── */
+.inspired { margin-bottom: 2rem; }
+.section-label { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
+.ex-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ex-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 18px;
+  flex: 1; min-width: 200px; max-width: 340px;
+  box-shadow: var(--shadow);
+}
+.ex-tag { font-size: 12px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 5px; }
+.ex-name { font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.ex-by { font-size: 15px; color: var(--text-2); }
+
+/* ── Section ── */
+.section { margin-bottom: 2.5rem; }
+
+/* ── Objective cards ── */
+.obj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
+@media (max-width: 700px) { .obj-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .obj-grid { grid-template-columns: 1fr; } }
+
+.obj-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+  cursor: pointer; transition: all .18s ease;
+  box-shadow: var(--shadow);
+}
+.obj-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); border-color: var(--border-strong); }
+.obj-card.active-p1 { border-left: 3px solid var(--green); background: #fafffe; }
+.obj-card.active-p2 { border-left: 3px solid var(--purple); background: #fafafe; }
+.obj-card.active-p3 { border-left: 3px solid var(--amber); background: #fffcf7; }
+.obj-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 10px; }
+.obj-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.obj-sub { font-size: 14px; color: var(--text-2); line-height: 1.5; margin-bottom: 10px; }
+.obj-tag { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-pill); display: inline-block; }
+
+/* ── Detail box ── */
+.detail-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 22px;
+  margin-bottom: 1.5rem; box-shadow: var(--shadow); min-height: 90px;
+}
+.detail-title { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+.detail-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.detail-list li { font-size: 15px; color: var(--text-2); display: flex; gap: 10px; line-height: 1.55; }
+.detail-list li::before { content: "→"; color: var(--text-3); flex-shrink: 0; }
+
+/* ── Callout boxes (PWA, Multi-vendor) ── */
+.callout {
+  border-radius: var(--radius); padding: 16px 18px; margin-top: 12px;
+}
+.callout-purple { background: var(--purple-bg); border: 1px solid rgba(127,119,221,0.3); }
+.callout-purple .callout-tag { font-size: 12px; font-weight: 600; letter-spacing:.06em; text-transform:uppercase; color: var(--purple-dark); margin-bottom: 6px; }
+.callout-title { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.callout-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; margin-bottom: 10px; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.cpill { font-size: 13px; padding: 3px 10px; border-radius: var(--radius-pill); background: var(--surface); color: var(--text-2); border: 1px solid var(--border-strong); }
+.cpill.purple { background: var(--purple-bg); color: var(--purple-dark); border-color: rgba(127,119,221,0.4); }
+.cpill.amber { background: var(--amber-bg); color: var(--amber-dark); border-color: rgba(239,159,39,0.4); }
+
+/* ── Journey / flow steps ── */
+.journey { display: flex; flex-direction: column; }
+.jstep { display: flex; gap: 16px; }
+.jstep-left { display: flex; flex-direction: column; align-items: center; width: 36px; flex-shrink: 0; }
+.jstep-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; flex-shrink: 0; }
+.jstep-line { flex: 1; width: 1px; background: var(--border-strong); margin: 4px 0; }
+.jstep-body { flex: 1; padding-bottom: 20px; }
+.jstep-title { font-size: 17px; font-weight: 600; color: var(--text); margin-top: 8px; margin-bottom: 4px; }
+.jstep-desc { font-size: 15px; color: var(--text-2); line-height: 1.6; }
+
+/* ── Goals grid ── */
+.goals-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 500px) { .goals-grid { grid-template-columns: 1fr; } }
+.goal-card { background: var(--surface2); border-radius: var(--radius-sm); padding: 14px 16px; }
+.goal-num { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+.goal-text { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+
+/* ── Revenue model tabs ── */
+.rev-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.rev-tab {
+  font-size: 14px; font-weight: 600; padding: 7px 18px;
+  border-radius: var(--radius-pill); border: 1px solid var(--border-strong);
+  color: var(--text-2); background: var(--surface);
+  cursor: pointer; transition: all .18s ease;
+}
+.rev-tab:hover { background: var(--surface2); }
+.rev-tab.active-p1 { background: var(--green-bg); color: var(--green-dark); border-color: var(--green); }
+.rev-tab.active-p2 { background: var(--purple-bg); color: var(--purple-dark); border-color: var(--purple); }
+.rev-tab.active-p3 { background: var(--amber-bg); color: var(--amber-dark); border-color: var(--amber); }
+.rpanel { display: none; }
+.rpanel.active { display: block; }
+
+/* ── Tier cards ── */
+.tier-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.tier-card {
+  flex: 1; min-width: 200px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.tier-card.featured { border-color: var(--purple); border-width: 1.5px; }
+.tier-tag-sm { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-pill); display: inline-block; margin-bottom: 10px; }
+.tier-desc { font-size: 15px; color: var(--text-2); line-height: 1.55; margin-bottom: 10px; }
+.tier-inc { display: flex; flex-direction: column; gap: 5px; }
+.tier-inc span { font-size: 14px; color: var(--text-2); display: flex; gap: 7px; }
+.tier-inc span::before { content: "✓"; color: var(--green); flex-shrink: 0; font-weight: 700; }
+
+/* ── Stream cards ── */
+.stream-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.stream-card { background: var(--surface2); border-radius: var(--radius-sm); padding: 14px 16px; }
+.stream-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.stream-desc { font-size: 14px; color: var(--text-2); line-height: 1.5; }
+.stag { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-pill); }
+
+/* ── Mkt info box ── */
+.mkt-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px;
+  margin-bottom: 14px; box-shadow: var(--shadow);
+}
+.mkt-box-title { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+.mkt-box ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.mkt-box li { font-size: 15px; color: var(--text-2); display: flex; gap: 10px; line-height: 1.55; }
+.mkt-box li::before { content: "→"; color: var(--text-3); flex-shrink: 0; }
+
+/* ── Revenue pills (P1) ── */
+.rev-pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.rev-pill {
+  flex: 1; min-width: 160px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow);
+}
+.rev-pill-title { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.rev-pill-desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.rtag { display: inline-block; margin-top: 10px; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-pill); }
+
+/* ── Pricing table ── */
+.pricing-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-bottom: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+thead { background: var(--surface2); }
+th { text-align: left; padding: 10px 16px; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); border-bottom: 1px solid var(--border); }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+tr:last-child td { border-bottom: none; }
+tr.hl td { background: #fffcf7; }
+.plan-badge { font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Beauty <span>AI</span></div>
+  <div class="nav-pills">
+    <div class="nav-pill p0 active" onclick="showPhase(0)">Overview</div>
+    <div class="nav-pill p1" onclick="showPhase(1)">Phase 1 — BeautyMart launch</div>
+    <div class="nav-pill p2" onclick="showPhase(2)">Phase 2 — Standalone product</div>
+    <div class="nav-pill p3" onclick="showPhase(3)">Phase 3 — Widget platform</div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ═══ OVERVIEW ═══ -->
+<div class="phase-panel active" id="ph0">
+  <div class="phase-head">
+    <div class="phase-eyebrow" style="color:var(--text-3)">Project plan</div>
+    <div class="phase-title">Sales Tool</div>
+    <div class="phase-sub">A digital salesperson — personalised, intelligent, and built for Sri Lankan shoppers</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">What is this system?</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);margin-bottom:1rem;">
+      <div style="font-size:15px;color:var(--text-2);line-height:1.8;">The sales system functions as a <strong style="color:var(--text)">digital salesperson</strong>, focusing on the promotion and sale of products. Its key feature is the ability to offer <strong style="color:var(--text)">personalised product recommendations</strong>, specifically addressing customer concerns such as skincare requirements, product types, and allergies.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Two primary audiences</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0;">
+      <div style="background:var(--green-bg);border:1px solid rgba(29,158,117,0.25);border-radius:var(--radius);padding:20px 22px;">
+        <div style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:white;color:var(--green-dark);padding:2px 10px;border-radius:100px;margin-bottom:12px">B2C</div>
+        <div style="font-size:17px;font-weight:600;color:var(--green-dark);margin-bottom:8px">Direct consumers</div>
+        <div style="font-size:14px;color:var(--green-dark);opacity:0.85;line-height:1.65;">Individual users visiting the <strong>beautymart.lk</strong> platform. They seek tailored product suggestions based on their specific needs — skincare goals, product types, or allergy considerations.</div>
+      </div>
+      <div style="background:var(--blue-bg);border:1px solid rgba(55,138,221,0.25);border-radius:var(--radius);padding:20px 22px;">
+        <div style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:white;color:var(--blue-dark);padding:2px 10px;border-radius:100px;margin-bottom:12px">B2B</div>
+        <div style="font-size:17px;font-weight:600;color:var(--blue-dark);margin-bottom:8px">Enterprise users & partnerships</div>
+        <div style="font-size:14px;color:var(--blue-dark);opacity:0.85;line-height:1.65;">Organisations and companies interested in licensing or integrating the sales system module into their own platforms to boost sales and increase profitability.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">Three-phase delivery plan</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:0;">
+
+      <div style="display:flex;gap:16px;align-items:stretch;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;" onclick="showPhase(1)">
+        <div style="flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--green-dark)">1</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;">
+            <div style="font-size:16px;font-weight:600;color:var(--text)">BeautyMart integration</div>
+            <span style="font-size:11px;font-weight:600;background:var(--green-bg);color:var(--green-dark);padding:2px 10px;border-radius:100px;">Phase 1</span>
+          </div>
+          <div style="font-size:14px;color:var(--text-2);line-height:1.6;">Development of an integrated system directly within the existing Beauty Mart platform — supporting sales within beautymart.lk.</div>
+        </div>
+        <div style="flex-shrink:0;font-size:18px;color:var(--text-3);align-self:center;">→</div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:stretch;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;" onclick="showPhase(2)">
+        <div style="flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--purple-dark)">2</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;">
+            <div style="font-size:16px;font-weight:600;color:var(--text)">Standalone application</div>
+            <span style="font-size:11px;font-weight:600;background:var(--purple-bg);color:var(--purple-dark);padding:2px 10px;border-radius:100px;">Phase 2</span>
+          </div>
+          <div style="font-size:14px;color:var(--text-2);line-height:1.6;">Creation of a standalone application or dedicated webpage operating independently of the Beauty Mart environment.</div>
+        </div>
+        <div style="flex-shrink:0;font-size:18px;color:var(--text-3);align-self:center;">→</div>
+      </div>
+
+      <div style="display:flex;gap:16px;align-items:stretch;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;" onclick="showPhase(3)">
+        <div style="flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--amber-bg);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--amber-dark)">3</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;">
+            <div style="font-size:16px;font-weight:600;color:var(--text)">Flexible integration module</div>
+            <span style="font-size:11px;font-weight:600;background:var(--amber-bg);color:var(--amber-dark);padding:2px 10px;border-radius:100px;">Phase 3</span>
+          </div>
+          <div style="font-size:14px;color:var(--text-2);line-height:1.6;">Advancement of the system into a flexible integration module, enabling its deployment and use across various other similar e-commerce or retail websites.</div>
+        </div>
+        <div style="flex-shrink:0;font-size:18px;color:var(--text-3);align-self:center;">→</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">Success metrics for the sales tool</div>
+    <div class="pricing-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>What it measures</th><th>How it's captured</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="plan-badge" style="background:var(--green-bg);color:var(--green-dark)">Adoption rate</span></td>
+            <td>% of site visitors who interact with the sales tool</td>
+            <td>Sessions with at least one chat message ÷ total site visits</td>
+          </tr>
+          <tr class="hl">
+            <td><span class="plan-badge" style="background:var(--blue-bg);color:var(--blue-dark)">Conversion rate</span></td>
+            <td>% of tool interactions that lead to a purchase</td>
+            <td>Purchases made after tool use ÷ total tool sessions</td>
+          </tr>
+          <tr>
+            <td><span class="plan-badge" style="background:var(--purple-bg);color:var(--purple-dark)">Average order value</span></td>
+            <td>% change in order value — tool users vs non-users</td>
+            <td>Avg basket size (tool users) vs avg basket size (all users)</td>
+          </tr>
+          <tr class="hl">
+            <td><span class="plan-badge" style="background:var(--amber-bg);color:var(--amber-dark)">User satisfaction</span></td>
+            <td>Qualitative feedback gathered from users</td>
+            <td>Thumbs up / 4–5 star rating / "helpful" response at end of chat</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ PHASE 1 ═══ -->
+<div class="phase-panel" id="ph1">
+  <div class="phase-head">
+    <div class="phase-eyebrow" style="color:var(--green)">Phase 1</div>
+    <div class="phase-title">BeautyMart.lk</div>
+    <div class="phase-sub">Launching a smart skincare sales tool right inside the store</div>
+  </div>
+
+  <div class="inspired section">
+    <div class="section-label">Inspired by</div>
+    <div class="ex-row">
+      <div class="ex-card">
+        <div class="ex-tag" style="color:var(--green)">Reference example</div>
+        <div class="ex-name">Beauty Genius</div>
+        <div class="ex-by">AI Virtual Beauty Assistant — L'Oréal Paris</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">How it gets built — step by step</div>
+    <div class="journey">
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--green-bg);color:var(--green-dark)">1</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Launch the chatbot</div><div class="jstep-desc">Build, test with sales person, and deploy the sales chatbot on beautymart.lk.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--green-bg);color:var(--green-dark)">2</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Gather data for improvements & proof</div><div class="jstep-desc">Gather user interaction data and feedback, and to implement necessary modifications to the deployed chatbot later.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--green-bg);color:var(--green-dark)">3</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Build the skin analysis (in parallel)</div><div class="jstep-desc">While collecting data from the chatbot, develop the skin analysis & scanner tool concurrently.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--green-bg);color:var(--green-dark)">4</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Merge chatbot + skin analysis</div><div class="jstep-desc">Merge the newly built skin analysis & scanner into the existing sales tool.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--green-dark);color:#fff">5</div></div><div class="jstep-body"><div class="jstep-title">Final optimisation</div><div class="jstep-desc">Use gathered data and feedback to make final modifications and enhancements to the integrated chatbot.</div></div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">What the tool can do — click to explore</div>
+    <div class="obj-grid" id="f1grid">
+      <div class="obj-card active-p1" onclick="selF1(0)" data-i="0"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">👤</div><div class="obj-title">User profile creation</div><div class="obj-sub">Learns skin type, concerns & allergies through conversation</div></div>
+      <div class="obj-card" onclick="selF1(1)" data-i="1"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">🔍</div><div class="obj-title">Product search</div><div class="obj-sub">Finds the right products based on user needs</div></div>
+      <div class="obj-card" onclick="selF1(2)" data-i="2"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">📋</div><div class="obj-title">Routine generation</div><div class="obj-sub">Creates a personalised routine based on user profile</div></div>
+      <div class="obj-card" onclick="selF1(3)" data-i="3"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">💬</div><div class="obj-title">Product explanation</div><div class="obj-sub">Provides detailed explanations for any product presented</div></div>
+      <div class="obj-card" onclick="selF1(4)" data-i="4"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">❓</div><div class="obj-title">Question answering</div><div class="obj-sub">Answers user queries about ingredients etc.</div></div>
+      <div class="obj-card" onclick="selF1(5)" data-i="5"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">⚖</div><div class="obj-title">Side-by-side comparison</div><div class="obj-sub">Offers a direct comparison of multiple products</div></div>
+      <div class="obj-card" onclick="selF1(6)" data-i="6"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">💡</div><div class="obj-title">Contextual follow-up</div><div class="obj-sub">Prompts a smart next-step question after each response</div></div>
+      <div class="obj-card" onclick="selF1(7)" data-i="7"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">🛒</div><div class="obj-title">Cross-sell & upsell</div><div class="obj-sub">Suggests complementary or premium products at the right moment</div></div>
+    </div>
+    <div class="detail-box"><div class="detail-title" id="f1title"></div><ul class="detail-list" id="f1list"></ul></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">Our goals in this phase</div>
+    <div class="goals-grid">
+      <div class="goal-card"><div class="goal-num" style="color:var(--green)">01</div><div class="goal-text">Launch a functional, integrated sales chatbot on beautymart.lk within given period and achieve meaningful engagement from live Sri Lankan shoppers.</div></div>
+      <div class="goal-card"><div class="goal-num" style="color:var(--green)">02</div><div class="goal-text">Drive measurable sales lift on the existing platform.</div></div>
+      <div class="goal-card"><div class="goal-num" style="color:var(--green)">03</div><div class="goal-text">Gather high-quality data & feedback to enable rapid iteration and future phases.</div></div>
+      <div class="goal-card"><div class="goal-num" style="color:var(--green)">04</div><div class="goal-text">Minimize risk/cost before expanding to standalone or modular versions.</div></div>
+      <div class="goal-card"><div class="goal-num" style="color:var(--green)">05</div><div class="goal-text">Build credible proof and analytical assets for Phase 2/3 and B2B potential.</div></div>
+      <div class="goal-card"><div class="goal-num" style="color:var(--green)">06</div><div class="goal-text">Run campaign across platform to get people to try out the tool.</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">Revenue model — sellers</div>
+    <div class="rev-pill-row" style="margin-bottom:0">
+      <div class="rev-pill"><div class="rev-pill-title">More sales</div><div class="rev-pill-desc">Sales increase achieved through product sales — the chatbot drives more purchases</div><span class="rtag" style="background:var(--green-bg);color:var(--green-dark)">Primary</span></div>
+      <div class="rev-pill"><div class="rev-pill-title">Side panel ads</div><div class="rev-pill-desc">Running ads in the side pane alongside the chatbot conversation</div><span class="rtag" style="background:var(--blue-bg);color:var(--blue-dark)">Ad revenue</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">Shopper plans — free &amp; premium</div>
+    <div style="font-size:14px;color:var(--text-2);margin-bottom:16px;line-height:1.6">Shoppers are never forced to pay. Free gives enough to try and discover. Premium is for shoppers who want a continuous, personalised experience across visits.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px">Free</div>
+        <div style="font-size:28px;font-weight:600;color:var(--text);margin-bottom:4px">LKR 0</div>
+        <div style="font-size:13px;color:var(--text-3);margin-bottom:16px">per day, always</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--text-2);">
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>10 chats per day</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>1 skin scan per session</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>Basic product recommendations</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--text-3)">✗</span><span style="color:var(--text-3)">Profile resets each session</span></div>
+          <div style="display:flex;gap:8px"><span style="color:var(--text-3)">✗</span><span style="color:var(--text-3)">Ads shown in side panel</span></div>
+          <div style="display:flex;gap:8px"><span style="color:var(--text-3)">✗</span><span style="color:var(--text-3)">No cross-session memory</span></div>
+        </div>
+        <div style="margin-top:14px;font-size:12px;color:var(--text-3);background:var(--surface2);border-radius:var(--radius-sm);padding:8px 10px;line-height:1.5">Hit the 10-chat limit? Come back tomorrow — your daily 10 resets fresh each day.</div>
+      </div>
+
+      <div style="background:var(--surface);border:2px solid var(--blue);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-md);position:relative;">
+        <div style="position:absolute;top:-1px;right:16px;background:var(--blue);color:white;font-size:11px;font-weight:700;padding:3px 12px;border-radius:0 0 8px 8px;letter-spacing:.05em">RECOMMENDED</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:10px">Premium</div>
+        <div style="font-size:28px;font-weight:600;color:var(--text);margin-bottom:4px">LKR 500 <span style="font-size:16px;font-weight:400;color:var(--text-3)">– 800</span></div>
+        <div style="font-size:13px;color:var(--text-3);margin-bottom:16px">per month</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--text-2);">
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>Unlimited chats</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>Up to 5 skin scans per month</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>Skin profile saved across sessions</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>Personalised routine — updates over time</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>Priority product matching + new arrivals</div>
+          <div style="display:flex;gap:8px"><span style="color:var(--green);font-weight:700">✓</span>Ad-free experience</div>
+        </div>
+        <div style="margin-top:14px;font-size:12px;color:var(--blue-dark);background:var(--blue-bg);border-radius:var(--radius-sm);padding:8px 10px;line-height:1.5">Your profile carries across every visit — the chatbot remembers your skin type, concerns, and past recommendations.</div>
+      </div>
+
+    </div>
+    <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--text-2);line-height:1.6">
+      <strong style="color:var(--text)">Key design decision:</strong> Free users are never blocked from using the tool — they just start fresh each day. This keeps the tool accessible to everyone in Sri Lanka while giving premium users a meaningfully better long-term experience.
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHASE 2 ═══ -->
+<div class="phase-panel" id="ph2">
+  <div class="phase-head">
+    <div class="phase-eyebrow" style="color:var(--purple)">Phase 2</div>
+    <div class="phase-title">Standalone Product</div>
+    <div class="phase-sub">A fully independent product — no longer tied to BeautyMart.lk</div>
+  </div>
+
+  <div class="inspired section">
+    <div class="section-label">Inspired by</div>
+    <div class="ex-row">
+      <div class="ex-card">
+        <div class="ex-tag" style="color:var(--purple-dark)">Reference example</div>
+        <div class="ex-name">Skin.Chat | Haut.AI</div>
+        <div class="ex-by">Standalone AI skin analysis & personalised skincare platform</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Primary objectives — click to explore</div>
+    <div class="obj-grid" id="f2grid">
+      <div class="obj-card active-p2" onclick="selF2(0)" data-i="0"><div class="obj-icon" style="background:var(--blue-bg);color:var(--blue-dark)">⛓</div><div class="obj-title">Decouple from BeautyMart</div><div class="obj-sub">Create an independent version that no longer depends on BeautyMart.lk</div><span class="obj-tag" style="background:var(--blue-bg);color:var(--blue-dark)">Independence</span></div>
+      <div class="obj-card" onclick="selF2(1)" data-i="1"><div class="obj-icon" style="background:var(--green-bg);color:var(--green-dark)">📦</div><div class="obj-title">Catalog handling</div><div class="obj-sub">Use a separate product database — updated periodically, isolated per vendor</div><span class="obj-tag" style="background:var(--green-bg);color:var(--green-dark)">Data</span></div>
+      <div class="obj-card" onclick="selF2(2)" data-i="2"><div class="obj-icon" style="background:var(--purple-bg);color:var(--purple-dark)">🌐</div><div class="obj-title">Expand accessibility & reach</div><div class="obj-sub">Allow users to access the tool without visiting the shop</div><span class="obj-tag" style="background:var(--purple-bg);color:var(--purple-dark)">Accessibility</span></div>
+      <div class="obj-card" onclick="selF2(3)" data-i="3"><div class="obj-icon" style="background:var(--amber-bg);color:var(--amber-dark)">💼</div><div class="obj-title">Prepare for monetisation & B2B</div><div class="obj-sub">Build a demo-ready product to attract early partners or license interest</div><span class="obj-tag" style="background:var(--amber-bg);color:var(--amber-dark)">Revenue</span></div>
+      <div class="obj-card" onclick="selF2(4)" data-i="4"><div class="obj-icon" style="background:var(--red-bg);color:var(--red-dark)">🧠</div><div class="obj-title">Move away from API key</div><div class="obj-sub">Build our own LLM to handle the sales chatbot — stop API usage</div><span class="obj-tag" style="background:var(--red-bg);color:var(--red-dark)">Hard · High impact</span></div>
+      <div class="obj-card" onclick="selF2(5)" data-i="5"><div class="obj-icon" style="background:var(--pink-bg);color:var(--pink-dark)">🏪</div><div class="obj-title">Make it multi-vendor</div><div class="obj-sub">Make the sales chatbot support a multi-vendor environment</div><span class="obj-tag" style="background:var(--pink-bg);color:var(--pink-dark)">Platform</span></div>
+    </div>
+    <div class="detail-box">
+      <div class="detail-title" id="f2title"></div>
+      <ul class="detail-list" id="f2list"></ul>
+      <div id="pwaBox" style="display:none">
+        <div class="callout callout-purple" style="margin-top:14px">
+          <div class="callout-tag" style="color:var(--purple-dark)">PWA — what does this mean?</div>
+          <div class="callout-title">Progressive Web App — a website that behaves like a phone app</div>
+          <div class="callout-desc">Instead of asking users to download anything from an app store, they simply visit the website and tap "Add to home screen." It then sits on their phone like a normal app — with its own icon, works offline, and loads fast. No app store needed, no download required.</div>
+          <div class="pill-row">
+            <span class="cpill">Works on any phone</span>
+            <span class="cpill">No app store download</span>
+            <span class="cpill">Sits on home screen like an app</span>
+            <span class="cpill">Works offline too</span>
+            <span class="cpill">Cheaper to build than a native app</span>
+          </div>
+        </div>
+      </div>
+      <div id="mvBox" style="display:none">
+        <div class="callout callout-purple" style="margin-top:14px">
+          <div class="callout-tag" style="color:var(--purple-dark)">Our approach</div>
+          <div class="callout-title">Best offer logic (default) + sponsored ranking (paid)</div>
+          <div class="callout-desc">The chatbot recommends the product based on the user's skin profile, then resolves who to buy it from based on price + delivery + sponsored ranking. This keeps the recommendation trustworthy — it's still picking the right product for your skin — while giving us a revenue stream from vendor placement fees.</div>
+          <div class="pill-row">
+            <span class="cpill purple">Show product once</span>
+            <span class="cpill purple">Rank sellers by price & delivery</span>
+            <span class="cpill amber">Sponsored placement — paid feature</span>
+            <span class="cpill">Trustworthy recommendation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">Revenue model</div>
+    <div class="rev-tabs">
+      <div class="rev-tab active-p2" id="p2t0" onclick="selP2Tab(0)">Software as a service</div>
+      <div class="rev-tab" id="p2t1" onclick="selP2Tab(1)">Business as a service</div>
+    </div>
+    <div class="rpanel active" id="p2r0">
+      <div style="font-size:15px;color:var(--text-2);margin-bottom:16px;line-height:1.6">We provide the software solution and maintain it for the client. Two ways to access it:</div>
+      <div class="tier-row">
+        <div class="tier-card">
+          <span class="tier-tag-sm" style="background:var(--purple-bg);color:var(--purple-dark)">License — standard</span>
+          <div class="tier-desc">Develop similar software tools for product selling websites and monetize access via API usage of the models. Pricing tiers (monthly, LKR):</div>
+          <div class="tier-inc"><span>Basic — Chatbot functionality only</span><span>Pro — Chatbot and Scanner functionality</span></div>
+        </div>
+        <div class="tier-card featured">
+          <span class="tier-tag-sm" style="background:var(--purple-bg);color:var(--purple-dark)">Perpetual license</span>
+          <div class="tier-desc">A one-time, upfront charge granting the vendor permanent access and usage rights to the specific version of the sales tool module licensed.</div>
+          <div class="tier-inc"><span>No recurring subscription fees</span><span>Permanent access to licensed version</span><span>Full usage rights included</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="rpanel" id="p2r1">
+      <div class="mkt-box">
+        <div class="mkt-box-title">How the business marketplace works</div>
+        <ul>
+          <li>We keep the software but provide the marketplace — allowing competitor organisations to list products alongside BeautyMart's own offerings</li>
+          <li>Only product name, brand, and price are sourced from the third party — remaining details are updated by us referring to valid sites</li>
+          <li>When the same product is listed by multiple sellers, the best offer is highlighted based on price and delivery time (user review may be included)</li>
+        </ul>
+      </div>
+      <div class="section-label" style="margin-bottom:10px">Revenue streams</div>
+      <div class="stream-grid">
+        <div class="stream-card"><div class="stream-title">Listing / onboarding fees</div><div class="stream-desc">Charge sellers to access the marketplace</div><span class="stag" style="background:var(--green-bg);color:var(--green-dark)">Entry fee</span></div>
+        <div class="stream-card"><div class="stream-title">Enrichment fee</div><div class="stream-desc">Charge for filling in the remaining product details service</div><span class="stag" style="background:var(--blue-bg);color:var(--blue-dark)">Data service</span></div>
+        <div class="stream-card"><div class="stream-title">Commission on sales</div><div class="stream-desc">Earn 5–15% commission on purchases referred from the tool</div><span class="stag" style="background:var(--purple-bg);color:var(--purple-dark)">Per transaction</span></div>
+        <div class="stream-card"><div class="stream-title">Sponsored placement</div><div class="stream-desc">Vendors can pay extra to get priority placement in results</div><span class="stag" style="background:var(--amber-bg);color:var(--amber-dark)">Paid boost</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHASE 3 ═══ -->
+<div class="phase-panel" id="ph3">
+  <div class="phase-head">
+    <div class="phase-eyebrow" style="color:var(--amber)">Phase 3</div>
+    <div class="phase-title">Widget Platform</div>
+    <div class="phase-sub">A plug-and-play chatbot widget any website can embed in minutes</div>
+  </div>
+
+  <div class="inspired section">
+    <div class="section-label">Inspired by</div>
+    <div class="ex-row">
+      <div class="ex-card"><div class="ex-tag" style="color:var(--amber-dark)">Reference example</div><div class="ex-name">Tidio</div><div class="ex-by">AI Customer Service Agent & Customer Support Software</div></div>
+      <div class="ex-card"><div class="ex-tag" style="color:var(--amber-dark)">Reference example</div><div class="ex-name">Intercom</div><div class="ex-by">The complete AI-first customer service solution</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">What is a widget?</div>
+    <div style="background:var(--amber-bg);border:1px solid rgba(239,159,39,0.3);border-radius:var(--radius);padding:18px 20px;display:flex;gap:16px;align-items:flex-start;">
+      <div style="font-size:28px;flex-shrink:0;margin-top:2px">🔌</div>
+      <div>
+        <div style="font-size:16px;font-weight:600;color:var(--amber-dark);margin-bottom:6px">A widget is a small piece of software that sits inside another website</div>
+        <div style="font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:12px">Think of it like a pop-up chat bubble you see on the bottom-right corner of many websites — like a bank, a shop, or a delivery service. That bubble is a widget. It is not part of the website itself; it was added by pasting a single line of code. Our chatbot works exactly the same way. Any vendor can paste our script tag into their website and the full sales chatbot appears — no technical team, no rebuild, no app to install.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="font-size:13px;padding:3px 12px;border-radius:100px;background:white;color:var(--amber-dark);border:1px solid rgba(239,159,39,0.4)">One line of code to install</span>
+          <span style="font-size:13px;padding:3px 12px;border-radius:100px;background:white;color:var(--amber-dark);border:1px solid rgba(239,159,39,0.4)">Works on any website</span>
+          <span style="font-size:13px;padding:3px 12px;border-radius:100px;background:white;color:var(--amber-dark);border:1px solid rgba(239,159,39,0.4)">No rebuild needed</span>
+          <span style="font-size:13px;padding:3px 12px;border-radius:100px;background:white;color:var(--amber-dark);border:1px solid rgba(239,159,39,0.4)">Like Intercom or Tidio</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Phase objectives — click to explore</div>
+    <div class="obj-grid" id="f3grid">
+      <div class="obj-card active-p3" onclick="selF3(0)" data-i="0"><div class="obj-icon" style="background:var(--amber-bg);color:var(--amber-dark)">⚙</div><div class="obj-title">Finalise core architecture</div><div class="obj-sub">Complete the chatbot's core infrastructure for stable communication</div><span class="obj-tag" style="background:var(--amber-bg);color:var(--amber-dark)">Foundation</span></div>
+      <div class="obj-card" onclick="selF3(1)" data-i="1"><div class="obj-icon" style="background:var(--amber-bg);color:var(--amber-dark)">🔌</div><div class="obj-title">Plug-and-play widget</div><div class="obj-sub">A lightweight embeddable widget — one script tag, any website</div><span class="obj-tag" style="background:var(--amber-bg);color:var(--amber-dark)">Core product</span></div>
+      <div class="obj-card" onclick="selF3(2)" data-i="2"><div class="obj-icon" style="background:var(--amber-bg);color:var(--amber-dark)">🚀</div><div class="obj-title">Standalone deployment</div><div class="obj-sub">Works on any vendor's own domain with minimal platform dependence</div><span class="obj-tag" style="background:var(--amber-bg);color:var(--amber-dark)">Independence</span></div>
+    </div>
+    <div class="detail-box"><div class="detail-title" id="f3title"></div><ul class="detail-list" id="f3list"></ul></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">How a vendor gets the chatbot on their website</div>
+    <div class="journey">
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">1</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Vendor registration</div><div class="jstep-desc">The vendor registers on our platform to list their products for sale.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">2</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Product instance creation</div><div class="jstep-desc">Once registered, the vendor's products are saved in our database — creating a dedicated data instance for them.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">3</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">The vendor has their own website</div><div class="jstep-desc">The vendor operates their own external products website on their own domain.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">4</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">The vendor wants our chatbot</div><div class="jstep-desc">The vendor wishes to implement our sales chatbot on their personal website.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">5</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Widget embedding</div><div class="jstep-desc">The vendor copies and pastes a single script tag into their website — that's all the technical setup needed.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">6</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Identity verification</div><div class="jstep-desc">The vendor uses the widget interface to verify their identity and prove ownership of their account.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">7</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Database connection</div><div class="jstep-desc">Upon successful verification, the widget connects to the vendor's specific product instance in our database.</div></div></div>
+      <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-dark);color:#fff">8</div></div><div class="jstep-body"><div class="jstep-title">Chatbot is live</div><div class="jstep-desc">The sales chatbot is now fully operational on the vendor's webpage, using only their own listed products.</div></div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-label">Revenue model</div>
+    <div class="rev-tabs">
+      <div class="rev-tab active-p3" id="p3t0" onclick="selP3Tab(0)">Subscription</div>
+      <div class="rev-tab" id="p3t1" onclick="selP3Tab(1)">Pay per usage</div>
+      <div class="rev-tab" id="p3t2" onclick="selP3Tab(2)">Commission on sales</div>
+    </div>
+    <div class="rpanel active" id="p3r0">
+      <div style="font-size:15px;color:var(--text-2);margin-bottom:14px;line-height:1.6">Vendors pay a monthly fee based on how many chats they need.</div>
+      <div class="pricing-wrap">
+        <table>
+          <thead><tr><th>Plan</th><th>Price</th><th>What's included</th></tr></thead>
+          <tbody>
+            <tr><td><span class="plan-badge" style="background:#f0ece6;color:#5a5650">Free</span></td><td>$0 / month</td><td>100 chats</td></tr>
+            <tr><td><span class="plan-badge" style="background:var(--blue-bg);color:var(--blue-dark)">Starter</span></td><td>$19 / month</td><td>500 chats</td></tr>
+            <tr class="hl"><td><span class="plan-badge" style="background:var(--amber-bg);color:var(--amber-dark)">Growth</span></td><td>$49 / month</td><td>2,000 chats</td></tr>
+            <tr><td><span class="plan-badge" style="background:var(--green-bg);color:var(--green-dark)">Pro</span></td><td>$99 / month</td><td>Unlimited chats + analytics</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="rpanel" id="p3r1">
+      <div class="stream-card" style="max-width:520px;padding:18px 20px;margin-bottom:16px">
+        <div class="stream-title" style="font-size:18px;margin-bottom:8px">Pay only for what you use</div>
+        <div class="stream-desc" style="font-size:15px;line-height:1.7">Instead of a fixed monthly fee, vendors are charged based on actual chatbot usage — the number of conversations or messages processed. Ideal for vendors with irregular or seasonal traffic who don't want to overpay during quiet periods.</div>
+        <span class="stag" style="background:var(--amber-bg);color:var(--amber-dark)">Usage-based billing</span>
+      </div>
+      <div class="pricing-wrap">
+        <table>
+          <thead><tr><th>Usage tier</th><th>Chats / month</th><th>Rate per chat</th><th>Example cost</th></tr></thead>
+          <tbody>
+            <tr><td><span class="plan-badge" style="background:#f0ece6;color:#5a5650">Starter</span></td><td>0 – 500</td><td>$0.08 / chat</td><td>Up to $40</td></tr>
+            <tr><td><span class="plan-badge" style="background:var(--blue-bg);color:var(--blue-dark)">Standard</span></td><td>501 – 2,000</td><td>$0.06 / chat</td><td>$30 – $120</td></tr>
+            <tr class="hl"><td><span class="plan-badge" style="background:var(--amber-bg);color:var(--amber-dark)">Growth</span></td><td>2,001 – 10,000</td><td>$0.04 / chat</td><td>$80 – $400</td></tr>
+            <tr><td><span class="plan-badge" style="background:var(--green-bg);color:var(--green-dark)">Enterprise</span></td><td>10,000+</td><td>Custom rate</td><td>Contact us</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="rpanel" id="p3r2">
+      <div class="journey">
+        <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">1</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Recommendation</div><div class="jstep-desc">The embedded chatbot recommends a product to the user.</div></div></div>
+        <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-bg);color:var(--amber-dark)">2</div><div class="jstep-line"></div></div><div class="jstep-body"><div class="jstep-title">Purchase</div><div class="jstep-desc">The customer clicks the recommendation and successfully completes a purchase.</div></div></div>
+        <div class="jstep"><div class="jstep-left"><div class="jstep-num" style="background:var(--amber-dark);color:#fff">3</div></div><div class="jstep-body"><div class="jstep-title">Revenue</div><div class="jstep-desc">The platform receives a commission of 1%–3% on the final sale value.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+const f1data=[
+  {t:"User profile creation",i:["Collect information regarding user concerns through conversation","Records skin type and health type","Notes allergies to avoid recommending harmful products","Builds a comprehensive user profile over the conversation"],pwa:false,mv:false},
+  {t:"Product search",i:["Search products based on the user profile built","Filters results to match skin type and concerns","Returns relevant products from the BeautyMart catalog","Refines suggestions as the user shares more details"],pwa:false,mv:false},
+  {t:"Routine generation",i:["Creates a personalised routine based on the established user profile","Covers morning and evening steps","Uses only products available on BeautyMart","Explains the order and purpose of each step"],pwa:false,mv:false},
+  {t:"Product explanation",i:["Provides detailed explanations for any product presented to the user","Covers key ingredients and what they do","Explains which skin types the product suits","Highlights any important warnings or tips"],pwa:false,mv:false},
+  {t:"Question answering",i:["Answers user queries about ingredients etc.","Covers safety, suitability, and comparisons","Handles trending skincare questions from Sri Lankan users","Gives clear, jargon-free answers"],pwa:false,mv:false},
+  {t:"Side-by-side comparison",i:["Offers a direct comparison of multiple products","Shows key differences in ingredients, price, and suitability","Helps the user make a confident decision","Ends with a clear recommendation when asked"],pwa:false,mv:false},
+  {t:"Contextual follow-up",i:["After each response, prompts the user with a smart, contextual next-step question","Based on the preceding interaction — not generic","Keeps the conversation moving naturally","Examples: 'Want me to build a routine?' or 'Shall I compare these?'"],pwa:false,mv:false},
+  {t:"Cross-sell & upsell",i:["Suggests complementary products that pair well with what the user is viewing","Recommends a premium alternative when it genuinely suits the user better","Timed naturally within the conversation — never pushy","Increases average basket size and overall sales"],pwa:false,mv:false}
+];
+const f2data=[
+  {t:"Decouple from BeautyMart",i:["Create an independent version that no longer depends on BeautyMart.lk","Remove all live API calls and backend dependencies on the store","Host everything independently — own domain, own servers","No shared auth, sessions, or data pipelines with BeautyMart"],pwa:false,mv:false},
+  {t:"Catalog handling",i:["Use a separate product database for the system","Update the catalog periodically — not in real time","For other vendors maintain a separate database","Add an admin interface to manage and trigger refreshes"],pwa:false,mv:false},
+  {t:"Expand accessibility & reach",i:["Allow users to access the tool without visiting the shop","Direct link shareable from Instagram bio","Discoverable via Google search for 'personalised skincare Sri Lanka'","Build as a PWA — see below for what that means"],pwa:true,mv:false},
+  {t:"Prepare for monetisation & B2B",i:["Build a demo-ready product that showcases the full experience","Showcases chatbot + emerging scanner integration from Phase 1 roadmap","Attract early partners or license interest","Create a polished pitch flow for B2B presentations","Show analytics data gathered in Phase 1"],pwa:false,mv:false},
+  {t:"Move away from API key — build own LLM",i:["Build our own LLM to handle the sales chatbot — stop API usage","Fine-tune an open-source model on skincare and sales data","Self-host to cut ongoing API costs","Start collecting conversation logs now to build the fine-tuning dataset"],pwa:false,mv:false},
+  {t:"Make it multi-vendor",i:["Make the sales chatbot support a multi-vendor environment","Design a vendor schema — ID, catalog, branding, routing rules","Route chatbot queries to the correct vendor catalog by context","Shared recommendation engine with isolated data per vendor"],pwa:false,mv:true}
+];
+const f3data=[
+  {t:"Finalise core architecture",i:["Complete the development of the chatbot's core infrastructure","Ensure stable communication between the widget interface and backend services","All existing functionality must remain fully operational","Establish a solid technical base before the widget is distributed"]},
+  {t:"Plug-and-play chat widget",i:["Design and implement a lightweight, embeddable chat widget","Vendors integrate it into any website using a simple script tag","The widget automatically loads the chatbot interface and manages user interactions","Securely connects to backend services without requiring complex setup"]},
+  {t:"Standalone deployment",i:["Ensure the tool can be used independently by other websites on their own domains","Minimal dependence on the original platform or server","Vendor's website runs the chatbot entirely on their own domain","No complex technical requirements for the vendor to maintain"]}
+];
+
+function selF1(i){
+  document.querySelectorAll('#f1grid .obj-card').forEach(c=>{c.className='obj-card'});
+  document.querySelector('#f1grid .obj-card[data-i="'+i+'"]').className='obj-card active-p1';
+  document.getElementById('f1title').textContent=f1data[i].t;
+  document.getElementById('f1list').innerHTML=f1data[i].i.map(x=>`<li>${x}</li>`).join('');
+}
+function selF2(i){
+  document.querySelectorAll('#f2grid .obj-card').forEach(c=>{c.className='obj-card'});
+  document.querySelector('#f2grid .obj-card[data-i="'+i+'"]').className='obj-card active-p2';
+  const d=f2data[i];
+  document.getElementById('f2title').textContent=d.t;
+  document.getElementById('f2list').innerHTML=d.i.map(x=>`<li>${x}</li>`).join('');
+  document.getElementById('pwaBox').style.display=d.pwa?'block':'none';
+  document.getElementById('mvBox').style.display=d.mv?'block':'none';
+}
+function selF3(i){
+  document.querySelectorAll('#f3grid .obj-card').forEach(c=>{c.className='obj-card'});
+  document.querySelector('#f3grid .obj-card[data-i="'+i+'"]').className='obj-card active-p3';
+  document.getElementById('f3title').textContent=f3data[i].t;
+  document.getElementById('f3list').innerHTML=f3data[i].i.map(x=>`<li>${x}</li>`).join('');
+}
+function selP2Tab(i){
+  ['p2t0','p2t1'].forEach((id,j)=>{
+    const t=document.getElementById(id);
+    t.className='rev-tab'+(j===i?' active-p2':'');
+  });
+  ['p2r0','p2r1'].forEach((id,j)=>document.getElementById(id).className='rpanel'+(j===i?' active':''));
+}
+function selP3Tab(i){
+  ['p3t0','p3t1','p3t2'].forEach((id,j)=>{
+    const t=document.getElementById(id);
+    t.className='rev-tab'+(j===i?' active-p3':'');
+  });
+  ['p3r0','p3r1','p3r2'].forEach((id,j)=>document.getElementById(id).className='rpanel'+(j===i?' active':''));
+}
+function showPhase(n){
+  document.querySelectorAll('.nav-pill').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.phase-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-pill')[n].classList.add('active');
+  document.getElementById('ph'+n).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+selF1(0);selF2(0);selF3(0);
+</script>
+</body>
+</html>
